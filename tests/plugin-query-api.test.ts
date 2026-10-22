@@ -322,6 +322,9 @@ describe("external plugin layer-visibility API", () => {
 
   it("throws for an unknown layer id", () => {
     const app = createPluginLayerVisibilityActions();
-    assert.throws(() => app.setLayerVisibility("missing-layer", false), /No layer with id "missing-layer"/);
+    assert.throws(
+      () => app.setLayerVisibility("missing-layer", false),
+      /No layer with id "missing-layer"/,
+    );
   });
 });
