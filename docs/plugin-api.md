@@ -873,7 +873,7 @@ These methods are typed optional for forward-compatibility with host variants, s
 
 ## Layer visibility
 
-`setLayerVisibility` shows or hides a layer the way the Layers panel's eye button does. It updates the layer store, so the eye icon, the map and a saved project all agree; hiding the MapLibre layer directly would leave the panel showing it as visible until the next sync turned it back on. It accepts any layer id, not only the plugin's own, and throws for an unknown one. Read the current state with `listLayers`.
+`setLayerVisibility` shows or hides a layer the way the Layers panel's eye button does. It updates the layer store, so the eye icon, the map and a saved project all agree; hiding the MapLibre layer directly would leave the panel showing it as visible until the next sync turned it back on. It accepts any layer id, not only the plugin's own, throws for an unknown one, and throws a `TypeError` when `visible` is not a boolean. Read the current state with `listLayers`.
 
 ```typescript
 // After turning a raster into outlines, show only the outlines.

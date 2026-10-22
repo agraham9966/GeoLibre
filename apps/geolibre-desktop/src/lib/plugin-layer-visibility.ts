@@ -17,6 +17,11 @@ import { useAppStore } from "@geolibre/core";
 export function createPluginLayerVisibilityActions() {
   return {
     setLayerVisibility: (layerId: string, visible: boolean): void => {
+      // Plugins can be untyped JavaScript: a string such as "false" is truthy and would leave
+      // a non-boolean in layer state, so refuse it as the embed API does.
+      if (typeof visible !== "boolean") {
+        throw new TypeError("setLayerVisibility: visible must be a boolean");
+      }
       const state = useAppStore.getState();
       if (!state.layers.some((layer) => layer.id === layerId)) {
         throw new Error(`No layer with id "${layerId}"`);

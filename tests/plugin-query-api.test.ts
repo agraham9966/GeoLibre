@@ -320,6 +320,17 @@ describe("external plugin layer-visibility API", () => {
     assert.equal(app.listLayers()[0]?.visible, true);
   });
 
+  it("rejects a visibility that is not a boolean and leaves the layer as it was", () => {
+    const layerId = useAppStore.getState().addGeoJsonLayer("Change map", {
+      type: "FeatureCollection",
+      features: [{ type: "Feature", id: "A", properties: {}, geometry: NULL_GEOMETRY }],
+    });
+    const app = { ...createPluginLayerVisibilityActions(), ...createPluginLayerQueries() };
+    // An untyped JavaScript plugin can pass anything; a truthy string must not reach the store.
+    assert.throws(() => app.setLayerVisibility(layerId, "false" as unknown as boolean), TypeError);
+    assert.equal(app.listLayers()[0]?.visible, true);
+  });
+
   it("throws for an unknown layer id", () => {
     const app = createPluginLayerVisibilityActions();
     assert.throws(
